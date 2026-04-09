@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>江南一卷：沉浸式无锡XR体验</title>
+
+<style>
+body {
+    margin: 0;
+    background: radial-gradient(circle, #020617, #000);
+    font-family: "Microsoft YaHei";
+    color: #00f7ff;
+    overflow-x: hidden;
+}
+
+#loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.scan-bar {
+    width: 300px;
+    height: 3px;
+    background: cyan;
+    animation: scanMove 2s infinite;
+}
+
+@keyframes scanMove {
+    0% { transform: translateY(-50px);}
+    100% { transform: translateY(50px);}
+}
+
+h1 {
+    text-align: center;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px cyan;
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.map-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 10px cyan);}
+    to { filter: drop-shadow(0 0 30px cyan);}
+}
+
+/* 🎯 点击区域优化 */
+.area {
+    position: absolute;
+    cursor: pointer;
+}
+
+.area:hover {
+    box-shadow: 0 0 20px cyan inset;
+    background: rgba(0, 255, 255, 0.3);
+}
+
+.ripple {
+    position: absolute;
+    border: 2px solid cyan;
+    border-radius: 50%;
+    animation: ripple 0.6s ease-out;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    from { width: 10px; height: 10px; opacity: 1;}
+    to { width: 200px; height: 200px; opacity: 0;}
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 450px;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: rgba(0,0,0,0.95);
+    border: 1px solid cyan;
+    box-shadow: 0 0 25px cyan;
+    padding: 15px;
+    z-index: 1000;
+    animation: popIn 0.3s forwards;
+    box-sizing: border-box;
+}
+
+@keyframes popIn {
+    to { transform: translate(-50%, -50%) scale(1);}
+}
+
+video {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: cyan;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+    <h2>扫描识别中...</h2>
+    <div class="scan-bar"></div>
+</div>
+
+<h1>江南一卷 · 无锡XR沉浸体验</h1>
+
+<div class="map-container">
+    <img src="1.jpg" alt="无锡地图">
+
+    <div class="area" style="top:34%; left:50%; width:12%; height:12%;" onclick="openPopup(event,'p1')"></div>
+	<div class="area" style="top:55%; left:73%; width:10%; height:10%;" onclick="openPopup(event,'p2')"></div> 
+	<div class="area" style="top:65%; left:73%; width:10%; height:10%;" onclick="openPopup(event,'p3')"></div> 
+	<div class="area" style="top:10%; left:63%; width:10%; height:10%;" onclick="openPopup(event,'p4')"></div>
+	<div class="area" style="top:20%; left:63%; width:10%; height:10%;" onclick="openPopup(event,'p5')"></div>  
+	<div class="area" style="top:58%; left:25%; width:10%; height:10%;" onclick="openPopup(event,'p7')"></div> 
+	<div class="area" style="top:68%; left:25%; width:10%; height:10%;" onclick="openPopup(event,'p6')"></div>
+	</div>
+	
+<div class="overlay" onclick="closePopup()"></div>
+
+<div id="p1" class="popup"><h2>惠山古镇</h2><video controls playsinline><source src="huishanguzhen.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+<div id="p2" class="popup"><h2>鼋头渚</h2><video controls playsinline><source src="yauntouzhu.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+<div id="p3" class="popup"><h2>灵山大佛</h2><video controls playsinline><source src="lingshandafo.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+<div id="p4" class="popup"><h2>江阴大桥</h2><video controls playsinline><source src="jiangyindaqiao.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+<div id="p5" class="popup"><h2>华西村</h2><video controls playsinline><source src="hauxicun.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+<div id="p6" class="popup"><h2>陶都</h2><video controls playsinline><source src="taodu.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+<div id="p7" class="popup"><h2>宜兴竹海</h2><video controls playsinline><source src="yixingzhuhai.mp4"preload="none"></video><button onclick="closePopup()">关闭</button></div>
+
+<script>
+// 开场动画消失
+setTimeout(() => { document.getElementById("loader").style.display="none"; }, 2000);
+
+// 打开弹窗
+function openPopup(e, id) {
+    closePopup();
+
+    let ripple = document.createElement("div");
+    ripple.className = "ripple";
+    ripple.style.left = e.pageX + "px";
+    ripple.style.top = e.pageY + "px";
+    document.body.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+
+    document.querySelector('.overlay').style.display = 'block';
+    document.getElementById(id).style.display = 'block';
+}
+
+// 关闭
+function closePopup() {
+    document.querySelector('.overlay').style.display = 'none';
+    document.querySelectorAll('.popup').forEach(p => {
+        p.style.display = 'none';
+        let v = p.querySelector("video");
+        if (v) {
+            v.pause();
+            v.currentTime = 0;
+        }
+    });
+}
+</script>
+</body>
+</html>
